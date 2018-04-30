@@ -8,9 +8,7 @@ const testContext = {};
 describe('Beta Examples (transactions)', function() {
   before(function() {
     const config = this.configuration;
-    testContext.url = `mongodb://${config.host}:${config.port}/${
-      testContext.dbName
-    }?replicaSet=${config.replicasetName}`;
+    testContext.url = `mongodb://${config.host}:${config.port}/${ testContext.dbName }?replicaSet=${config.replicasetName}`;
 
     return MongoClient.connect(testContext.url).then(client =>
       Promise.all([
