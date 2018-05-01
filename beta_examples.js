@@ -3,13 +3,11 @@ const MongoClient = mongodb.MongoClient;
 const expect = require('chai').expect;
 const MongoNetworkError = mongodb.MongoNetworkError;
 const describe = require('describe');
-const testContext = {};
 
+const testContext = {};
 describe('Beta Examples (transactions)', function() {
   before(function() {
-    const config = this.configuration;
-    testContext.url = `mongodb://${config.host}:${config.port}/${ testContext.dbName }?replicaSet=${config.replicasetName}`;
-
+    testContext.url = `mongodb://localhost:27000,localhost:27001,localhost:27002/test?replicaSet=rs0`;
     return MongoClient.connect(testContext.url).then(client =>
       Promise.all([
         client.db('test').createCollection('shipment'),
@@ -17,12 +15,13 @@ describe('Beta Examples (transactions)', function() {
         client
           .db('test')
           .collection('inventory')
-          .insertOne({ sku: 'abc123', qty: 500 })
+          .insertOne({ sku: 'abc123', qty: 500 }),
+        client.close()
       ])
     );
   });
 
-  after(() => testContext.client.close());
+  afterEach(() => testContext.client.close());
   beforeEach(function() {
     testContext.client = new MongoClient(testContext.url);
     return testContext.client.connect();
@@ -42,8 +41,11 @@ describe('Beta Examples (transactions)', function() {
         .then(() =>
           db.collection('shipment').insertOne({ sku: 'abc123', qty: 100 }, { session })
         )
-        .catch(() => session.abortTransaction())
-        .then(() => session.commitTransaction());
+        .then(() => session.commitTransaction())
+        .catch(err => {
+          if (err) console.dir(err);
+          session.abortTransaction();
+        });
     });
     // End Beta Transaction Example 1 (promises)
 
@@ -66,6 +68,7 @@ describe('Beta Examples (transactions)', function() {
               .updateOne({ sku: 'abc123' }, { $inc: { qty: -100 } }, { session });
             await db.collection('shipment').insertOne({ sku: 'abc123', qty: 100 }, { session });
           } catch (err) {
+            if (err) console.dir(err);
             session.abortTransaction();
             throw err;
           }
@@ -99,8 +102,11 @@ describe('Beta Examples (transactions)', function() {
             .collection('shipment')
             .insertOne({ sku: 'abc123', qty: 100 }, { session, writeConcern: { w: 1 } })
         )
-        .catch(() => session.abortTransaction())
-        .then(() => session.commitTransaction());
+        .then(() => session.commitTransaction())
+        .catch(err => {
+          if (err) console.dir(err);
+          session.abortTransaction();
+        });
     });
     // End Beta Transaction Example 2 (promises)
 
@@ -129,6 +135,7 @@ describe('Beta Examples (transactions)', function() {
               .collection('shipment')
               .insertOne({ sku: 'abc123', qty: 100 }, { session, writeConcern: { w: 1 } });
           } catch (err) {
+            if (err) console.dir(err);
             session.abortTransaction();
             throw err;
           }
@@ -156,8 +163,11 @@ describe('Beta Examples (transactions)', function() {
             .collection('shipment')
             .insertOne({ sku: 'abc123', qty: 100 }, { session, writeConcern: { w: 1 } })
         )
-        .catch(() => session.abortTransaction())
-        .then(() => session.commitTransaction());
+        .then(() => session.commitTransaction())
+        .catch(err => {
+          if (err) console.dir(err);
+          session.abortTransaction();
+        });
     }
 
     const db = client.db('test');
@@ -179,7 +189,7 @@ describe('Beta Examples (transactions)', function() {
   it('example with retryability (async-await)', function() {
     const client = testContext.client;
 
-    // Start Beta Transaction Example 3 (promises)
+    // Start Beta Transaction Example 3 (async-await)
     async function runShipmentTransaction(db, session) {
       session.startTransaction({ writeConcern: { w: 'majority' } });
 
@@ -214,7 +224,7 @@ describe('Beta Examples (transactions)', function() {
           }
         }
       );
-    // End Beta Transaction Example 3 (promises)
+    // End Beta Transaction Example 3 (async-await)
 
     return promise.then(() => client.close());
   });
