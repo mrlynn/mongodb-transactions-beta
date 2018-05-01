@@ -6,17 +6,13 @@ const MongoNetworkError = mongodb.MongoNetworkError;
 const testContext = {};
 describe('Beta Examples (transactions)', function() {
   before(function() {
-    testContext.url = `mongodb://localhost:27000,localhost:27001,localhost:27002/test?replicaSet=rs0`;
-    return MongoClient.connect(testContext.url).then(client =>
-      Promise.all([
-        client.db('test').createCollection('shipment'),
-        client.db('test').createCollection('inventory'),
-        client
-          .db('test')
-          .collection('inventory')
-          .insertOne({ sku: 'abc123', qty: 500 }),
-        client.close()
-      ])
+    testContext.url = 'mongodb://localhost:27017/test?replicaSet=rs0';
+    return MongoClient.connect(testContext.url)
+    .then(client =>
+      client.db('test').createCollection('shipment')
+        .then(() => client.db('test').createCollection('inventory'))
+        .then(() => client.db('test').collection('inventory').insertOne({ sku: 'abc123', qty: 500 }))
+        .then(() => client.close())
     );
   });
 
