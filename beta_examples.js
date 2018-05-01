@@ -2,7 +2,6 @@ const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 const expect = require('chai').expect;
 const MongoNetworkError = mongodb.MongoNetworkError;
-const describe = require('describe');
 
 const testContext = {};
 describe('Beta Examples (transactions)', function() {
