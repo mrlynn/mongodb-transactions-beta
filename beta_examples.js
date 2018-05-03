@@ -6,7 +6,13 @@ const MongoNetworkError = mongodb.MongoNetworkError;
 const testContext = {};
 describe('Beta Examples (transactions)', function() {
   before(function() {
-    testContext.url = 'mongodb://localhost:27017/test?replicaSet=rs0';
+    //
+    // You'll need to modify the next line with testContext.url to your specific mongodb environment.
+    // If you want a quick way to spin up a simple replica set have a look at:
+    // https://github.com/mrlynn/mdb-transactions-beta/blob/master/generate.sh
+    // this script will render a simple replica set of three nodes running locally on ports 27000,27001,27002
+    //
+    testContext.url = 'mongodb://localhost:27000,localhost:27001,localhost:27002/test?replicaSet=rs0';
     return MongoClient.connect(testContext.url)
     .then(client =>
       client.db('test').createCollection('shipment')
