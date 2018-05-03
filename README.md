@@ -11,7 +11,7 @@ This repository was assembled to help you participate in the `MongoDB BETA Trans
   * [OSX Server](https://fastdl.mongodb.org/osx/mongodb-osx-ssl-x86_64-3.7.7.tgz)
   * [Windows Server](https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.7.7-signed.msi/download)
   * ... There are more links [here](https://groups.google.com/forum/#!topic/mongodb-txnbeta/ML8jxxvnRKM)
-* Once you've cloned this repo, View and tailor the [generate.sh](https://github.com/mrlynn/mdb-transactions-beta/blob/master/generate.sh) script variables that dictate where your MongoDB Binaries and where the Data should live.  You can modify the ports used and the PATH to the binaries you wish to test by creating a `.env` file - looking something like the following (see `.env-example`):
+* Once you've cloned this repo, View and tailor the [generate.sh](https://github.com/mrlynn/mdb-transactions-beta/blob/master/generate.sh) script variables that dictate where your MongoDB Binaries and where the Data should live.  You can modify the ports used and the PATH to the binaries you wish to test by creating a `.env` file - looking something like the following (see [.env-example](https://github.com/mrlynn/mongodb-transactions-beta/blob/master/.env-example)):
 
 ```
 MONGODB_BIN=/Users/yourid/bin/mongodb-current/bin
