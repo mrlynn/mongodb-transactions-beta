@@ -18,6 +18,7 @@ DATA_DIR=./data/beta
 PORT1=27000
 PORT2=27001
 PORT3=27002
+source ./.env 2> /dev/null
 #
 # This test requires a specific version of MongoDB
 #
