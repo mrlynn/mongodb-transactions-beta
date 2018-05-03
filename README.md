@@ -53,9 +53,6 @@ Mongo Shell command to connect to replica set:
 /Users/mlynn/.mongodb/versions/mongodb-current/bin/mongo mongodb://localhost:27000,localhost:27001,localhost:27002/?replicaSet=rs0
 
 ```
-<p class="callout warning">The `generate.sh` script will perform a check on the versions of MongoDB Client and Server that you have installed.  If you do not have the appropriate versions installed, generate will exit and tell you about it.  If you have installed the appropriate versions - but it's still failing, check the PATH to ensure that the correct versions of the mongo shell and the mongod server are being executed.
-
-You may need to modify your $PATH - or the $MONGODB_BIN variable to ensure that you're testing using the appropriate versions.</p>
 
 The `generate.sh` script will perform a check on the versions of MongoDB Client and Server that you have installed.  If you do not have the appropriate versions installed, generate will exit and tell you about it.  If you have installed the appropriate versions - but it's still failing, check the PATH to ensure that the correct versions of the mongo shell and the mongod server are being executed.
 
