@@ -12,6 +12,54 @@ This repository was assembled to help you participate in the `MongoDB BETA Trans
   * [Windows Server](https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-3.7.7-signed.msi/download)
   * ... There are more links [here](https://groups.google.com/forum/#!topic/mongodb-txnbeta/ML8jxxvnRKM)
 * Once you've cloned this repo, View and tailor the [generate.sh](https://github.com/mrlynn/mdb-transactions-beta/blob/master/generate.sh) script variables that dictate where your MongoDB Binaries and where the Data should live.
+* Now that `generate.sh` is tailored, go ahead and run it.  Make sure you see output similar to the following:
+
+```
+$ sh generate.sh
+This beta test requires MongoDB > 3.7
+Client Version: MongoDB shell version v3.7.7
+Server Version: db version v3.7.7
+2018-05-03T07:05:44.831-0400 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
+about to fork child process, waiting until server is ready for connections.
+forked process: 4550
+child process started successfully, parent exiting
+2018-05-03T07:05:45.633-0400 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
+about to fork child process, waiting until server is ready for connections.
+forked process: 4553
+child process started successfully, parent exiting
+2018-05-03T07:05:46.450-0400 I CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
+about to fork child process, waiting until server is ready for connections.
+forked process: 4556
+child process started successfully, parent exiting
+2018-05-03T07:05:50.600-0400 I NETWORK  [main] Secure Transport Initialized
+MongoDB shell version v3.7.7
+connecting to: mongodb://127.0.0.1:27000/
+MongoDB server version: 3.7.7
+{
+	"ok" : 1,
+	"operationTime" : Timestamp(1525345550, 1),
+	"$clusterTime" : {
+		"clusterTime" : Timestamp(1525345550, 1),
+		"signature" : {
+			"hash" : BinData(0,"AAAAAAAAAAAAAAAAAAAAAAAAAAA="),
+			"keyId" : NumberLong(0)
+		}
+	}
+}
+bye
+
+Mongo Shell command to connect to replica set:
+
+/Users/mlynn/.mongodb/versions/mongodb-current/bin/mongo mongodb://localhost:27000,localhost:27001,localhost:27002/?replicaSet=rs0
+
+```
+<p class="callout warning">The `generate.sh` script will perform a check on the versions of MongoDB Client and Server that you have installed.  If you do not have the appropriate versions installed, generate will exit and tell you about it.  If you have installed the appropriate versions - but it's still failing, check the PATH to ensure that the correct versions of the mongo shell and the mongod server are being executed.
+
+You may need to modify your $PATH - or the $MONGODB_BIN variable to ensure that you're testing using the appropriate versions.</p>
+
+The `generate.sh` script will perform a check on the versions of MongoDB Client and Server that you have installed.  If you do not have the appropriate versions installed, generate will exit and tell you about it.  If you have installed the appropriate versions - but it's still failing, check the PATH to ensure that the correct versions of the mongo shell and the mongod server are being executed.
+
+You may need to modify your $PATH - or the $MONGODB_BIN variable to ensure that you're testing using the appropriate versions.
 
 ## NodeJS
 * Ensure that you have all necessary [NodeJS](http://nodejs.org) requirements installed including npm
@@ -38,3 +86,5 @@ Note line 8 below for references to specific port numbers - this will likely be 
     );
   });
   ```
+
+
