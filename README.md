@@ -58,6 +58,25 @@ The `generate.sh` script will perform a check on the versions of MongoDB Client 
 
 You may need to modify your $PATH - or the $MONGODB_BIN variable to ensure that you're testing using the appropriate versions.
 
+You should now have a replica set of 3 instances running locally on your machine.  To verify, you can use something like the following:
+
+```
+$ ps -ef | grep mongo
+  502  6699     1   0  7:36AM ??         0:04.97 /Users/mlynn/.mongodb/versions/mongodb-current/bin/mongod --replSet rs0 --port 27000 --dbpath ./data/beta/env/r0 --fork --logpath ./data/beta/env/r0/log/mongod.log
+  502  6703     1   0  7:36AM ??         0:04.67 /Users/mlynn/.mongodb/versions/mongodb-current/bin/mongod --replSet rs0 --port 27001 --dbpath ./data/beta/env/r1 --fork --logpath ./data/beta/env/r1/log/mongod.log
+  502  6706     1   0  7:36AM ??         0:04.56 /Users/mlynn/.mongodb/versions/mongodb-current/bin/mongod --replSet rs0 --port 27002 --dbpath ./data/beta/env/r2 --fork --logpath ./data/beta/env/r2/log/mongod.log
+  502  7249  2858   0  7:43AM ttys000    0:00.00 grep mongo
+```
+
+If you see something similar to the following, something has failed in the launching of your instances. 
+
+```
+$ ps -ef | grep mongod
+  502  7288  2858   0  7:43AM ttys000    0:00.00 grep mongod
+```
+
+
+
 ## NodeJS
 * Ensure that you have all necessary [NodeJS](http://nodejs.org) requirements installed including npm
 * Once you've cloned this repository, run `npm install` to install the necessary requirements found in `package.json`.
