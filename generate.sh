@@ -23,8 +23,34 @@ PORT3=27002
 #
 echo "This beta test requires MongoDB > 3.7"
 echo "Client Version: \c:"
-$MONGODB_BIN/mongo --version | grep -i "Shell version"
+CLIENT_VERSION=$(${MONGODB_BIN}/mongo --version | grep version | head -1 | cut -d' ' -f4|cut -d'v' -f2)
+echo $CLIENT_VERSION
+CLIENT_MAJOR=$(echo $CLIENT_VERSION | cut -d. -f1)
+CLIENT_MINOR=$(echo $CLIENT_VERSION | cut -d. -f2)
+CLIENT_MICRO=$(echo $CLIENT_VERSION | cut -d. -f3)
+if [ "$CLIENT_MAJOR" -lt "3" ]; then
+  echo "Must have at least Major Version 3, Minor Version 7 and Micro Version 7 of mongod installed.";
+  exit;
+fi
+if [ "$CLIENT_MINOR" -lt "7" ]; then
+    echo "Must have at least version 3.7.7";
+    exit
+fi
 echo "Server Version: \c"
+SERVER_VERSION=$(${MONGODB_BIN}/mongod --version | grep version | head -1 | cut -d' ' -f3|cut -d'v' -f2)
+echo $SERVER_VERSION
+SERVER_MAJOR=$(echo $SERVER_VERSION | cut -d. -f1)
+SERVER_MINOR=$(echo $SERVER_VERSION | cut -d. -f2)
+SERVER_MICRO=$(echo $SERVER_VERSION | cut -d. -f3)
+if [ "$SERVER_MAJOR" -lt "3" ]; then
+  echo "Must have at least Major Version 3, Minor Version 7 and Micro Version 7 of mongod installed.";
+  exit;
+fi
+if [ "$SERVER_MINOR" -lt "7" ]; then
+    echo "Must have at least version 3.7.7";
+    exit
+fi
+
 $MONGODB_BIN/mongod --version | grep "db version"
 
 #
